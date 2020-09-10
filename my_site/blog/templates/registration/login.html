@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% block title %}Авторизация{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% block name_page %}
+<h1 class="my-4">Authorization</h1>
+{% endblock name_page %}
+<form method="POST" action="{% url 'login' %}">
+	{% csrf_token %}
+    {{form|crispy}}
+    <input name='login' type='submit' value="Sign In" class="btn btn-primary"></input>
+    <a href="{% url 'register' %}" class="btn btn-secondary my-2">Registration</a>
+    <br>
+    <label>If you do not have an account, click on the button "Registration"</label>
+    <br>
+
+</form>
+<hr>
+
+<br>
+
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "blog/home.html" %}}
+
+{% block content %}
+    <h2 class="text-info">{{news.title}}</h2>
+    {% if news.image %}
+        <img src="{{ news.image.url }}">
+    {% endif %}
+    <h4>{% autoescape off %} {{news.text_news|safe|linebreaks}}{% endautoescape %}</h4>
+    <h6 class="text-info">Author name: {{news.author_text}}</h6>
+    <em class="text-info">Posted: {{news.pub_date|date:"D,m,Y  H:i:s"}}</em>
+    <em class="text-info">Created: {{news.created_date|date:"D,m,Y  H:i:s"}}</em>
+        {% if user.is_authenticated %}
+        <form action="{% url 'leave_comment' news.id %}" method="POST">
+        {% csrf_token %}
+            <br>
+            <textarea name="text" required="" placeholder="Comment text" cols="30" rows="10"></textarea>
+            </br>
+            <button type="submit">leave comment</button>
+        </form>
+        {% endif %}
+    <hr>
+    <p>Comments: </p>
+    {% if comments %}
+        {% for c in comments %}
+            <p>comment author:
+                <strong>{{c.author_name}}</strong>
+                <p>{% autoescape off %} {{c.comment_text}}{% endautoescape %}</p>
+                <em>is written: {{c.pub_date}}</em>
+                <h6>--------------------------------</h6>
+            </p>
+        {% endfor %}
+    </hr>
+{% endif %}
+{% endblock %}
